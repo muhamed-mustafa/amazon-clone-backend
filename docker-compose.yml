@@ -1,0 +1,32 @@
+version: "3.9"
+services:
+  backend:
+    build: .
+    container_name: amazon-clone-backend
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+    depends_on:
+      - redis
+      - mongodb
+    volumes:
+      - .:/app
+    command: npm run start:dev
+
+  redis:
+    image: redis:7-alpine
+    container_name: amazon-clone-redis
+    ports:
+      - 6379:6379
+      
+  mongodb:
+    image: mongo:6.0.2
+    container_name: amazon-clone-mongodb
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data:/data/db
+
+volumes:
+  mongodb_data:

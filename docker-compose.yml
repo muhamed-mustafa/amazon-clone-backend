@@ -1,8 +1,9 @@
-version: "3.9"
+version: '3.9'
 services:
   backend:
     build: .
     container_name: amazon-clone-backend
+    command: pnpm run start:dev
     ports:
       - 3000:3000
     env_file:
@@ -12,14 +13,14 @@ services:
       - mongodb
     volumes:
       - .:/app
-    command: npm run start:dev
+      - /app/node_modules
 
   redis:
     image: redis:7-alpine
     container_name: amazon-clone-redis
     ports:
       - 6379:6379
-      
+
   mongodb:
     image: mongo:6.0.2
     container_name: amazon-clone-mongodb
